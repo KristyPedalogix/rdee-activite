@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Réflexion – Écoute active</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #143B7A;
+      --teal: #27B0A6;
+      --orange: #F5A623;
+      --text: #1f1f1f;
+      --line: #cfcfcf;
+      --card: #f7f7f7;
+      --selected: #eef5ff;
+      --selected-border: #7f97bf;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Lato', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px; /* 🔥 réduit (moins d’espace global) */
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .activity {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* 🔥 QUESTION EN MERRIWEATHER */
+    .question-title {
+      font-family: 'Merriweather', serif;
+      font-size: 17px;
+      line-height: 1.5;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin-bottom: 20px;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 0; /* 🔥 enlève le gros espace */
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 16px 18px;
+      border: 2px solid transparent;
+      background: #fff;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s ease;
+    }
+
+    .choice:hover {
+      background: #fafafa;
+      border-color: #e4e4e4;
+    }
+
+    .choice.selected {
+      background: var(--selected);
+      border-color: var(--selected-border);
+    }
+
+    .icon-circle {
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      border: 1.8px solid #999;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .choice.selected .icon-circle {
+      border-color: var(--navy);
+    }
+
+    .icon-circle::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: transparent;
+    }
+
+    .choice.selected .icon-circle::after {
+      background: var(--teal);
+    }
+
+    /* 🔥 RÉPONSES */
+    .choice-text {
+      font-family: 'Merriweather', serif;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .feedback {
+      background: var(--card);
+      padding: 24px;
+      text-align: center;
+      margin-top: 16px; /* 🔥 espace contrôlé */
+    }
+
+    .feedback-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 12px;
+      border: 2px solid var(--navy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .feedback-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feedback-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="activity">
+    <h2 class="question-title">
+      Quand un collègue vous parle, que se passe-t-il le plus souvent?
+    </h2>
+
+    <div class="divider"></div>
+
+    <div class="choices">
+      <button class="choice" onclick="selectChoice(this)">
+        <span class="icon-circle"></span>
+        <span class="choice-text">Je l'écoute sans l'interrompre jusqu'à la fin.</span>
+      </button>
+
+      <button class="choice" onclick="selectChoice(this)">
+        <span class="icon-circle"></span>
+        <span class="choice-text">Je pense déjà à ce que je vais répondre.</span>
+      </button>
+
+      <button class="choice" onclick="selectChoice(this)">
+        <span class="icon-circle"></span>
+        <span class="choice-text">Je vérifie discrètement mon téléphone ou mes emails.</span>
+      </button>
+
+      <button class="choice" onclick="selectChoice(this)">
+        <span class="icon-circle"></span>
+        <span class="choice-text">Je reformule ce qu'il dit pour m'assurer de bien comprendre.</span>
+      </button>
+    </div>
+
+    <div id="feedbackBox" class="feedback hidden">
+      <div class="feedback-icon">💡</div>
+      <div class="feedback-title">Réflexion</div>
+      <p class="feedback-text">
+        Quelle que soit votre habitude aujourd'hui, elle peut évoluer. L'écoute active s'apprend et se développe avec de petites actions au quotidien.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function selectChoice(selectedBtn) {
+      const allChoices = document.querySelectorAll('.choice');
+      const feedbackBox = document.getElementById('feedbackBox');
+
+      allChoices.forEach(choice => choice.classList.remove('selected'));
+      selectedBtn.classList.add('selected');
+
+      feedbackBox.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
